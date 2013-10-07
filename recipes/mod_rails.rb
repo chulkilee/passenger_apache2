@@ -31,6 +31,9 @@ if platform_family?('debian')
     owner 'root'
     group 'root'
     mode 0644
+    variables(
+      :passenger_module_path => node['passenger']['module_path']
+    )
   end
 end
 
@@ -40,6 +43,11 @@ template "#{node['apache']['dir']}/mods-available/passenger.conf" do
   owner 'root'
   group 'root'
   mode 0644
+  variables(
+    :passenger_root_path => node['passenger']['root_path'],
+    :passenger_ruby_bin => node['passenger']['ruby_bin'],
+    :passenger_max_pool_size => node['passenger']['max_pool_size']
+  )
 end
 
 apache_module 'passenger' do
